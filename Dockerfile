@@ -30,6 +30,8 @@ RUN 	curl -S https://extdist.wmflabs.org/dist/extensions/LDAPUserInfo-REL1_31-da
     	tar zxf /tmp/LDAPU.tgz -C /var/www/html/extensions && \
     	rm -rf /tmp/LDAPU.tgz
 
+RUN	apt-get remove --purge wget curl
+
 RUN	apt-get autoremove --purge && apt-get clean
 
 
