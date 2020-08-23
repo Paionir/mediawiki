@@ -30,7 +30,10 @@ RUN 	curl -S https://extdist.wmflabs.org/dist/extensions/LDAPUserInfo-REL1_31-da
     	tar zxf /tmp/LDAPU.tgz -C /var/www/html/extensions && \
     	rm -rf /tmp/LDAPU.tgz
 
-RUN	apt-get remove --purge wget curl
+RUN	apt-get remove --purge -y wget curl
+
+RUN	sed -i -e "s/post_max_size = 8M/ post_max_size = 64M/g" /etc/php/7.3/apache2/php.ini && \
+	sed -i -e "s/upload_max_filesize = 2M/upload_max_filesize = 64M/g" /etc/php/7.3/apache2/php.ini
 
 RUN	apt-get autoremove --purge && apt-get clean
 
