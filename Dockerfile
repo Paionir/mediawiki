@@ -1,7 +1,7 @@
 FROM 	debian:stable
 
 RUN 	apt-get update && apt-get upgrade && \
-	apt-get install -y apache2 apt-utils php php-mysql libapache2-mod-php php-xml php-mbstring php-ldap wget curl
+	apt-get install -y apache2 apt-utils php php-mysql libapache2-mod-php php-xml php-mbstring php-ldap wget curl git
 
 RUN	update-ca-certificates && \
 	echo -e "TLS_CACERTDIR   /etc/ssl/certs \nTLS_CACERT      /etc/ssl/certs/ca-certificates.crt">> /etc/ldap/ldap.conf 
@@ -32,12 +32,12 @@ RUN 	curl -S https://extdist.wmflabs.org/dist/extensions/LDAPUserInfo-REL1_31-da
 
 RUN	apt-get remove --purge -y wget curl
 
-RUN	apt install -y php7.3-gd php7.3-intl 
+RUN	apt-get install -y php7.3-gd php7.3-intl
 
 RUN	sed -i -e "s/post_max_size = 8M/ post_max_size = 64M/g" /etc/php/7.3/apache2/php.ini && \
 	sed -i -e "s/upload_max_filesize = 2M/upload_max_filesize = 64M/g" /etc/php/7.3/apache2/php.ini
 
-RUN	apt-get autoremove --purge && apt-get remove --purge apt-utilis -y && apt-get clean
+RUN	apt-get autoremove --purge && apt-get remove --purge apt-utils -y && apt-get clean
 
 EXPOSE	80 	
 
