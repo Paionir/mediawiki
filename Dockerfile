@@ -37,7 +37,7 @@ RUN	apt install -y php7.3-gd php7.3-intl
 RUN	sed -i -e "s/post_max_size = 8M/ post_max_size = 64M/g" /etc/php/7.3/apache2/php.ini && \
 	sed -i -e "s/upload_max_filesize = 2M/upload_max_filesize = 64M/g" /etc/php/7.3/apache2/php.ini
 
-RUN	apt-get autoremove --purge && apt-get remove --purge apt-util -y && apt-get clean
+RUN	apt-get autoremove --purge && apt-get remove --purge apt-utilis -y && apt-get clean
 
 EXPOSE	80 	
 
