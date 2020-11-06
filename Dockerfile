@@ -6,11 +6,11 @@ RUN 	apt-get update && apt-get upgrade && \
 RUN	update-ca-certificates && \
 	echo -e "TLS_CACERTDIR   /etc/ssl/certs \nTLS_CACERT      /etc/ssl/certs/ca-certificates.crt">> /etc/ldap/ldap.conf 
 
-RUN	cd /tmp && wget -q https://releases.wikimedia.org/mediawiki/1.34/mediawiki-1.34.2.tar.gz && \
-	tar -xzf /tmp/mediawiki-1.34.2.tar.gz -C /tmp/ && cd /tmp/mediawiki-1.34.2 && mv ./* /var/www/html && \
+RUN	cd /tmp && wget -q https://releases.wikimedia.org/mediawiki/1.31/mediawiki-1.31.10.tar.gz && \
+	tar -xzf /tmp/mediawiki-1.31.10.tar.gz  -C /tmp/ && cd /tmp/mediawiki-1.31.10 && mv ./* /var/www/html && \
 	rm -rf /tmp/mediawiki* && rm /var/www/html/index.html
 
-RUN 	curl -S https://extdist.wmflabs.org/dist/extensions/LDAPProvider-REL1_31-8e93a3e.tar.gz -o /tmp/LDAPP.tgz && \
+RUN 	curl -S https://extdist.wmflabs.org/dist/extensions/LDAPProvider-REL1_31-098cd58.tar.gz -o /tmp/LDAPP.tgz && \
     	tar zxf /tmp/LDAPP.tgz -C /var/www/html/extensions && \
     	rm -rf /tmp/LDAPP.tgz
 
@@ -18,7 +18,7 @@ RUN 	curl -S https://extdist.wmflabs.org/dist/extensions/LDAPAuthorization-REL1_
     	tar zxf /tmp/LDAPA.tgz -C /var/www/html/extensions && \
     	rm -rf /tmp/LDAPA.tgz
 
-RUN 	curl -S https://extdist.wmflabs.org/dist/extensions/PluggableAuth-REL1_34-17fb1ea.tar.gz -o /tmp/PlugA.tgz && \
+RUN 	curl -S https://extdist.wmflabs.org/dist/extensions/PluggableAuth-REL1_31-300ac44.tar.gz -o /tmp/PlugA.tgz && \
     	tar zxf /tmp/PlugA.tgz -C /var/www/html/extensions && \
     	rm -rf /tmp/PlugA.tgz
 
@@ -29,6 +29,10 @@ RUN 	curl -S https://extdist.wmflabs.org/dist/extensions/LDAPAuthentication2-REL
 RUN 	curl -S https://extdist.wmflabs.org/dist/extensions/LDAPUserInfo-REL1_31-da95a07.tar.gz -o /tmp/LDAPU.tgz && \
     	tar zxf /tmp/LDAPU.tgz -C /var/www/html/extensions && \
     	rm -rf /tmp/LDAPU.tgz
+
+RUN	cd /var/www/html/extensions && git clone https://github.com/Mediawiki-wysiwyg/WYSIWYG-CKeditor.git WYSIWYG-src && \
+	ln -s WYSIWYG-src/WYSIWYG  WYSIWYG && ln -s WYSIWYG-src/SemanticForms SemanticForms && mv WikiEditor WikiEditor-org && \
+	ln -s WYSIWYG-src/WikiEditor WikiEditor && cd --
 
 RUN	apt-get remove --purge -y wget curl
 
